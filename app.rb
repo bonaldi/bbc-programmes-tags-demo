@@ -15,7 +15,7 @@ class Tag
   end
 
   def coocurrences
-    pairs = `grep "#{value}" sorted_tag_data.txt | sort -r | head -n 5`
+    pairs = `grep "#{value}" sorted_tag_data.txt | sort -nr | head -n 5`
 
     pairs.split("\n").map do |line|
       parts  = line.strip.split(" ")
