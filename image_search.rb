@@ -43,7 +43,13 @@ class ImageSearch
   end
 
   def self.cache
-    @cache ||= Dalli::Client.new(['localhost:11211'])
+    @cache ||= begin
+      if ENV['MEMCACHE_SERVERS']
+        Dalli::Client.new(["#{ENV['MEMCACHE_SERVERS']}:11211"], :username => ENV['MEMCACHE_USERNAME'], :password => ENV['MEMCACHE_PASSWORD'])
+      else
+        Dalli::Client.new(['localhost:11211'])
+      end
+    end
   end
 
 end
